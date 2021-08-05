@@ -1,9 +1,5 @@
 name: build-release
-# UNCOMMENT THIS IF YOU WANT THIS TO RUN ON EVERY PUSH, or
-# change the events that this listens for.
-# on:
-#   push:
-#     branches: [main]
+on: workflow_dispatch
 jobs:
   build:
     runs-on: ubuntu-latest
