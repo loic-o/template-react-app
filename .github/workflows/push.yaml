@@ -1,0 +1,68 @@
+name: build-release
+# UNCOMMENT THIS IF YOU WANT THIS TO RUN ON EVERY PUSH, or
+# change the events that this listens for.
+# on:
+#   push:
+#     branches: [main]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      # this is the global env var that needs to be changed - its used to name
+      # the zip file artifact that is created below
+      APP_NAME: BUILD
+      GITHUB_TOKEN: ${{ github.token }}
+
+    steps:
+    - name: checkout code
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0  # to ensure tags are available
+
+    - name: setup Node
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+
+    - name: build
+      run: |
+        npm install
+        npm run build --prod
+
+    # figure out - based on past tags, what version this should be
+    - name: get version
+      id: get-version
+      uses: paulhatch/semantic-version@v4.0.2
+
+    - name: compress artifacts
+      id: compress-artifacts
+      # i am not using the 'zip' action as it doesn't output the zip file name, and the method below doesn't work w/ it
+      # i would rather not have to recreate the value everywhere its needed
+      run: |
+        tar czvf "$ART_FILE" build
+        echo ::set-output name=artifact-file::$(echo $ART_FILE)
+      env:
+        ART_FILE: "${{ env.APP_NAME }}-${{ steps.get-version.outputs.version }}.tar.gz"
+
+    # create the release
+    - name: create the release
+      id: create-release
+      uses: actions/create-release@v1
+      with:
+        draft: false
+        # need to implement a mech to distinguish between release and pre-release
+        #   probably can use tags to do it - maybe, since this will tag the commit
+        prerelease: true
+        release_name: v${{ steps.get-version.outputs.version }}
+        tag_name: ${{ steps.get-version.outputs.version_tag }}
+        # we could indicate some body text here or something
+
+    # upload the artifcat
+    - name: upload artifact(s)
+      uses: actions/upload-release-asset@v1
+      with:
+        upload_url: ${{ steps.create-release.outputs.upload_url }}
+        asset_path: ${{ steps.compress-artifacts.outputs.artifact-file }}
+        asset_name: ${{ steps.compress-artifacts.outputs.artifact-file }}
+        asset_content_type: application/gzip
+
