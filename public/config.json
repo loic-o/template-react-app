@@ -1,3 +1,10 @@
 {
-    "docId" : 101
+    "docId" : 101,
+    "idpConfig" : {
+        "idpUrl" : "https://auth.iam.dev.hxp.hyland.com/idp",
+        "response_type" : "code",
+        "client_id" : "innovation:clients:devportal",
+        "redirect_uri": "http://localhost:5000/authentication-confirmation",
+        "scope" : "openid%20profile%20hxp"
+    }
 }
