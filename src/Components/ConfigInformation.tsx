@@ -3,7 +3,6 @@ import React from "react"
 //fix this so it builds, and make sure we can import builds, deplouy them, etc...
 interface HomeScreenProps {
     config : any
-    accessToken: string
 }
 
 export default function HomeScreen(props: HomeScreenProps) {    
@@ -24,10 +23,6 @@ export default function HomeScreen(props: HomeScreenProps) {
             </div>)
         }
       </div>
-      <p>
-        Here's your HXP access token this is for demonstration purposes and shouldn't be shown in production.
-      </p>
-      <p>{props.accessToken}</p>
       <a
         className="App-link"
         href="https://reactjs.org"
