@@ -1,7 +1,6 @@
 import React from "react"
 
-//make this look better and then check it in :)
-
+//fix this so it builds, and make sure we can import builds, deplouy them, etc...
 interface HomeScreenProps {
     config : any
     accessToken: string
@@ -19,7 +18,7 @@ export default function HomeScreen(props: HomeScreenProps) {
       </p>
       <div>
         {
-          Object.keys(props.config).filter(key => key != "idpConfig").map(key => <div>
+          Object.keys(props.config).filter(key => key !== "idpConfig").map(key => <div>
               <p>{key}</p>
               <p>{props.config[key]}</p>
             </div>)

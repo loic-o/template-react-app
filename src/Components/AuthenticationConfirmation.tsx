@@ -12,8 +12,8 @@ export default function AuthenticationConfirmation(props: AuthenticationConfirma
     console.log("auth confirm render", props.idpConfig)
     useEffect(() => {
         const code = new URLSearchParams(window.location.search).get('code')
-        if(code == null) {
-            throw 'unable to get authentication'
+        if(code === null) {
+            throw new Error('unable to get authentication')
         }
     
         fetch('https://auth.iam.dev.hxp.hyland.com/idp/connect/token', {
@@ -30,7 +30,7 @@ export default function AuthenticationConfirmation(props: AuthenticationConfirma
           .then(token => {
                 console.log("token recieved", token)
                 if(token.error) {
-                    throw 'unable to get token ' + token.error
+                    throw new Error('unable to get token ' + token.error)
                 }
     
                 props.onAuthenticated(token.access_token)
@@ -38,9 +38,9 @@ export default function AuthenticationConfirmation(props: AuthenticationConfirma
             })
             .catch(err => {
                 console.log(err)
-                throw "unable to perform token exchange"
+                throw new Error("unable to perform token exchange")
             }) 
-    },[])
+    })
 
     return <div>Loading...</div>
 }

@@ -20,7 +20,7 @@ function App() {
   }
   
   function fetchToken(config : any) {
-    if(window.location.pathname == "/") {
+    if(window.location.pathname === "/") {
       let authService = new AuthenticationService(config.idpConfig)
       authService.getToken()
     }
@@ -34,7 +34,7 @@ function App() {
     if(config === null) {
         fetchConfig()
     }
-  }, [])
+  })
 
   if(config === null && token == null) {
     return <p>Loading...</p>
