@@ -7,6 +7,7 @@ import AuthenticationService from './Services/AuthenticationService';
 
 //add HXP auth support to the template....that'll demo better in the paper we have to write for this.
 function App() {
+  /*
   let [config, setConfig] = useState<any | null>(null) 
   let [token, setToken] = useState<string | null>(null)
 
@@ -43,7 +44,8 @@ function App() {
   return  <BrowserRouter> 
       <Route exact path="/" render={(props) => <HomeScreen accessToken={token as string} config={config} />}></Route>
       <Route path="/authentication-confirmation" render={(authProps) => <AuthenticationConfirmation idpConfig={config.idpConfig} history={authProps.history} match={authProps.match} location={authProps.location} onAuthenticated={onAuthenticated} />} />
-  </BrowserRouter>
+  </BrowserRouter>*/
+  return <HomeScreen accessToken={"accessToken"} config={{}} />
 }
 
 export default App;
