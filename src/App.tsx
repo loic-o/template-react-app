@@ -1,9 +1,5 @@
 import './App.css';
-import { useEffect, useState } from 'react';
 import HomeScreen from './Components/ConfigInformation';
-import { BrowserRouter, Route } from "react-router-dom"
-import AuthenticationConfirmation from './Components/AuthenticationConfirmation';
-import AuthenticationService from './Services/AuthenticationService';
 
 //add HXP auth support to the template....that'll demo better in the paper we have to write for this.
 function App() {
