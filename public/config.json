@@ -1,3 +1,4 @@
 {
-    "docId" : 101
+    "docId" : 101,
+    "onbaseToken" : "use the devportal to generate an onbase token for local development"
 }
