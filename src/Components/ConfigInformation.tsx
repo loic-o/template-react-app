@@ -1,42 +1,40 @@
-import { config } from "process"
-import React from "react"
+import React, { useEffect, useState } from "react"
 
-//fix this so it builds, and make sure we can import builds, deplouy them, etc...
+//get cors working locally and get the document name out by the end of the day tomorrow... "_____"
 interface HomeScreenProps {
     config : any
 }
 
 export default function HomeScreen(props: HomeScreenProps) {    
-    if(props.config.onbaseToken.startsWith("use")) {
-      return <p>Use the devportal to generate an onbase token and place that in your config.json</p>
+  let [name, setName] = useState("")
+  let onbaseToken = props.config.onbaseToken
+  
+  useEffect(() => {
+    if(name === "" && !onbaseToken.startsWith("use")) {
+      fetchDocumentName()
     }
+  })
+
+  if(onbaseToken === "") {
+      return <p>Use the devportal to generate an onbase token and place that in your config.json</p>
+  }
     
-    //otherwise, use the token to hit the devportal proxy and get the name of the document that's been configured.
-    return <div className="App">
+  function fetchDocumentName() {
+    fetch(`${props.config.devportalUrl}/OnBase/Document/${props.config.docId}`, {
+      method: "GET",
+      headers: { "content-type" : "application/json", "x-onbase-token" : onbaseToken }
+    })
+      .then(resp => resp.json())
+      .then(document => setName(document.name))
+      .catch(err => {
+        setName("unable to get document name see dev tools for more information")
+        console.log(err)
+      })
+  }
+
+  return <div className="App">
     <header className="App-header">
-      <img src="logo.svg" className="App-logo" alt="logo" />
-      <p>
-        Edit <code>src/App.js</code> and save to reload.
-      </p>
-      <p>
-        Here are your Config Values
-      </p>
-      <div>
-        {
-          Object.keys(props.config).filter(key => key !== "idpConfig").map(key => <div>
-              <p>{key}</p>
-              <p>{props.config[key]}</p>
-            </div>)
-        }
-      </div>
-      <a
-        className="App-link"
-        href="https://reactjs.org"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Learn React
-      </a>
+      <p>Document name: {name}</p>
     </header>
   </div>
 }

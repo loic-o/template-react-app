@@ -1,4 +1,5 @@
 {
     "docId" : 101,
-    "onbaseToken" : "use the devportal to generate an onbase token for local development"
+    "onbaseToken" : "",
+    "devportalUrl" : "http://localhost:5000" 
 }
