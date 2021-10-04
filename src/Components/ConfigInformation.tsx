@@ -31,7 +31,7 @@ export default function HomeScreen(props: HomeScreenProps) {
   return <div className="App">
     <header className="App-header">
       {
-          imageSrc == "" ? <></> : <img src={imageSrc} />
+          imageSrc === "" ? <></> : <img src={imageSrc} alt="onbase image"/>
       }
     </header>
   </div>
